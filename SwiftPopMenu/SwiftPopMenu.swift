@@ -71,7 +71,7 @@ public class SwiftPopMenu: UIView {
     /// - Parameters:
     ///   - frame: <#frame description#>
     ///   - arrowMargin: ç®­å¤´è·ç¦»å³è¾¹è·ç¦»
-    init(frame: CGRect,arrowMargin:CGFloat) {
+    public init(frame: CGRect, arrowMargin:CGFloat) {
         super.init(frame: frame)
         
         arrowViewMargin = arrowMargin
