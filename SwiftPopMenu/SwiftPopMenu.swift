@@ -3,7 +3,7 @@
 //  TestSwift
 //
 //  Created by lyj on 16/5/7.
-//  Copyright © 2016年 zyyj. All rights reserved.
+//  Copyright Â© 2016å¹´ zyyj. All rights reserved.
 //
 
 import UIKit
@@ -16,53 +16,44 @@ public class SwiftPopMenu: UIView {
     
     public var delegate : SwiftPopMenuDelegate?
     
-    
     let KScrW:CGFloat = UIScreen.main.bounds.size.width
     let KScrH:CGFloat = UIScreen.main.bounds.size.height
     
     private var myFrame:CGRect!
-
+    
     private var arrowView : UIView! = nil
     private var arrowViewWidth : CGFloat = 15
     private var arrowViewHeight : CGFloat = 8
     
+    //ï¼*  -----------------------  å¯ååæ° ------------------------------------------ *ï¼
     
-    //／*  -----------------------  可变参数 ------------------------------------------ *／
-    
-    //小箭头距离右边距离
+    //å°ç®­å¤´è·ç¦»å³è¾¹è·ç¦»
     public var arrowViewMargin : CGFloat = 15
-    //圆角弧度
+    //åè§å¼§åº¦
     public var cornorRadius:CGFloat = 5
     
-    //pop文字颜色
+    //popæå­é¢è²
     public var popTextColor:UIColor = UIColor(red: 107 / 255.0, green: 107 / 255.0, blue: 107 / 255.0, alpha: 1.0)
-    //pop背景色
+    //popèæ¯è²
     public var popMenuBgColor:UIColor = UIColor.white
-    
-    
     
     var tableView:UITableView! = nil
     public var popData:[(icon:String,title:String)]! = [(icon:String,title:String)](){
         didSet{
-            //计算行高
+            //è®¡ç®è¡é«
             rowHeightValue = (self.myFrame.height - arrowViewHeight)/CGFloat(popData.count)
             initViews()
         }
-        
     }
     
-    
     public var didSelectMenuBlock:((_ index:Int)->Void)?
-    
     
     static let cellID:String = "SwiftPopMenuCellID"
     var rowHeightValue:CGFloat = 44
     
     
-   
-    
     /**
-     位置是popmenu相对整个屏幕的位置
+     ä½ç½®æ¯popmenuç¸å¯¹æ´ä¸ªå±å¹çä½ç½®
      
      - parameter frame: <#frame description#>
      
@@ -75,12 +66,11 @@ public class SwiftPopMenu: UIView {
         myFrame = frame
     }
     
-    
-    /// 位置是popmenu相对整个屏幕的位置
+    /// ä½ç½®æ¯popmenuç¸å¯¹æ´ä¸ªå±å¹çä½ç½®
     ///
     /// - Parameters:
     ///   - frame: <#frame description#>
-    ///   - arrowMargin: 箭头距离右边距离
+    ///   - arrowMargin: ç®­å¤´è·ç¦»å³è¾¹è·ç¦»
     init(frame: CGRect,arrowMargin:CGFloat) {
         super.init(frame: frame)
         
@@ -93,7 +83,6 @@ public class SwiftPopMenu: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         dismiss()
     }
@@ -103,13 +92,12 @@ public class SwiftPopMenu: UIView {
     }
     
     public func dismiss() {
-         self.removeFromSuperview()
+        self.removeFromSuperview()
     }
-
     
     func initViews() {
         self.backgroundColor = UIColor.black.withAlphaComponent(0.1)
-        //箭头
+        //ç®­å¤´
         arrowView=UIView(frame: CGRect(x: myFrame.origin.x, y: myFrame.origin.y, width: myFrame.width, height: arrowViewHeight))
         let layer=CAShapeLayer()
         let path=UIBezierPath()
@@ -132,21 +120,15 @@ public class SwiftPopMenu: UIView {
         UIView.animate(withDuration: 0.3) { 
             self.addSubview(self.tableView)
         }
-        
-
-        
     }
-    
 }
-
 
 class SwiftPopMenuCell: UITableViewCell {
     var iconImage:UIImageView!
     var lblTitle:UILabel!
     var line:UIView!
     
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = UIColor.clear
         
@@ -172,9 +154,7 @@ class SwiftPopMenuCell: UITableViewCell {
         self.lblTitle.text = title
         self.line.isHidden = islast
         lblTitle.textColor = textColor
-        
     }
-
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -182,10 +162,7 @@ class SwiftPopMenuCell: UITableViewCell {
         self.iconImage.frame = CGRect(x: 10, y: (self.bounds.size.height - 20)/2, width: 20, height: 20)
         self.lblTitle.frame = CGRect(x: 40, y: 0, width: self.bounds.size.width - 40, height: self.bounds.size.height)
         self.line.frame = CGRect(x: 0, y: self.frame.size.height - 1, width: self.frame.size.width, height: 1)
-
     }
-    
-    
 }
 
 extension SwiftPopMenu : UITableViewDataSource{
@@ -200,15 +177,14 @@ extension SwiftPopMenu : UITableViewDataSource{
             let model = popData[indexPath.row]
             if indexPath.row == popData.count - 1 {
                 cell.fill(iconImage: model.icon, title: model.title,textColor: popTextColor, islast: true)
-            }else{
-                 cell.fill(iconImage: model.icon, title: model.title,textColor: popTextColor)
+            } else {
+                cell.fill(iconImage: model.icon, title: model.title,textColor: popTextColor)
             }
             return cell
         }
         
         return UITableViewCell()
     }
-    
 }
 
 extension SwiftPopMenu : UITableViewDelegate{
@@ -224,9 +200,9 @@ extension SwiftPopMenu : UITableViewDelegate{
         if self.delegate != nil{
             self.delegate?.swiftPopMenuDidSelectIndex(index: indexPath.row)
         }
+        
         if didSelectMenuBlock != nil {
             didSelectMenuBlock!(indexPath.row)
         }
-        
     }
 }
